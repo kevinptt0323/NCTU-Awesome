@@ -1,17 +1,28 @@
-function getBase64Image(img) {
-    const canvas = document.createElement("canvas");
-    canvas.width = img.width;
-    canvas.height = img.height;
+import { getBase64Image, currentPage, skip } from './util';
 
-    const ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0);
+switch(currentPage()) {
+  case "LOGIN":
+    // login page
+    document.getElementById('iframe1').addEventListener('load', function() {
+      /*
+      const $$img = this.contentDocument.getElementById('img');
+      const b64 = getBase64Image($$img);
+      const $$qCode = document.querySelector('input[name="qCode"]');
+      $$qCode.value = recongize($$img);
+      */
+    });
 
-    const dataURL = canvas.toDataURL("image/png");
-
-    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+    document.querySelector('input[type="submit"]').addEventListener('click', function() {
+      const $$qCode = document.querySelector('input[name="qCode"]');
+      //console.log($$qCode.value);
+    });
+    break;
+  case "SKIP":
+    skip();
+    break;
+  case "MAIN":
+    break;
 }
 
-const img = document.getElementById('iframe1').contentDocument.getElementById('img')
-
-getBase64Image(img);
+console.log(currentPage());
 

@@ -7,7 +7,7 @@
 
     "content_scripts": [
         {
-            "matches": ["*://course.nctu.edu.tw/*"],
+            "matches": ["*://course.nctu.edu.tw/", "*://course.nctu.edu.tw/index.asp"],
             "js": ["dist/course/index.js"]
         }
     ]
