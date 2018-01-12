@@ -1,0 +1,14 @@
+{
+    "manifest_version": 2,
+    "description": "NCTU Awesome Extension",
+    "name": "NCTU-Awesome",
+    "version": "1.0",
+    "homepage_url": "https://github.com/kevinptt0323/NCTU-Awesome",
+
+    "content_scripts": [
+        {
+            "matches": ["*://course.nctu.edu.tw/*"],
+            "js": ["src/course/index.js"]
+        }
+    ]
+}
