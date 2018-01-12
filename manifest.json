@@ -8,7 +8,8 @@
     "content_scripts": [
         {
             "matches": ["*://course.nctu.edu.tw/", "*://course.nctu.edu.tw/index.asp"],
-            "js": ["dist/course/index.js"]
+            "js": ["dist/course/index.js"],
+            "css": ["dist/course/index.css"]
         }
     ]
 }
