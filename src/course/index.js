@@ -1,9 +1,11 @@
-import { getBase64Image, currentPage, skip } from './util';
+import { currentPage, skip } from './util';
+import $ from 'jquery';
+import componentHandler from 'componentHandler'
 
 switch(currentPage()) {
   case "LOGIN":
     // login page
-    
+
     const $loginForm = $.parseHTML(`
 <div id="login_form" class="mdl-color--white mdl-shadow--2dp mdl-grid">
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell--12-col">

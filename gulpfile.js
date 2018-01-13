@@ -4,6 +4,11 @@ const babelify = require('babelify');
 const source = require('vinyl-source-stream');
 const less = require('gulp-less');
 
+const expose = {
+  'jquery': '$',
+  'componentHandler': 'componentHandler',
+};
+
 gulp.task('build:course', ['build:course:js', 'build:course:css']);
 gulp.task('build:course:js', (done) => {
   const files = [
@@ -12,8 +17,9 @@ gulp.task('build:course:js', (done) => {
   Promise.all(files.map(entry => {
     const stream = browserify({
       entries: [entry],
-      transform: [babelify]
+      transform: [babelify],
     })
+      .transform('exposify', { expose })
       .bundle()
       .pipe(source(entry.split('/').reverse()[0]))
       .pipe(gulp.dest(`${__dirname}/dist/course`));
