@@ -12,21 +12,21 @@ export function getBase64Image(img) {
 }
 
 export function currentPage() {
-  if (document.querySelector('#iframe1'))
-    return "LOGIN";
-  else if (document.querySelector('input[value="已充分瞭解"], input[value="確定"]'))
-    return "SKIP";
-  else if (document.querySelector('frameset'))
-    return "MAIN";
+    if (document.querySelector('#iframe1'))
+        return "LOGIN";
+    else if (document.querySelector('input[value="已充分瞭解"], input[value="確定"]'))
+        return "SKIP";
+    else if (document.querySelector('frameset'))
+        return "MAIN";
 }
 
 export function skip() {
-  const $$nextPageBtn = document.querySelector('input[value="已充分瞭解"], input[value="確定"]');
-  $$nextPageBtn.click();
+    const $$nextPageBtn = document.querySelector('input[value="已充分瞭解"], input[value="確定"]');
+    $$nextPageBtn.click();
 }
 
 export default {
-  getBase64Image,
-  currentPage,
-  skip,
+    getBase64Image,
+    currentPage,
+    skip,
 };
