@@ -63,6 +63,7 @@ switch(currentPage()) {
     skip();
     break;
   case "MAIN":
+    window.location = 'inMenu.asp';
     break;
 }
 
