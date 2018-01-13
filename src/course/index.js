@@ -42,12 +42,15 @@ switch(currentPage()) {
   <div class="mdl-cell--12-col">
     <ul>
       <li><a href="en/index.asp" target="_top">Enter Online Course Registration System</a></li>
-      <li>帳號=學號, 密碼=舊生請仍延用上學期密碼, 新生請用身分證後六碼（研究所新生若已暑修，密碼與暑修同）</li>
-      <li><a href="https://cross-college.nctu.edu.tw/" target="_blank">校際選課系統(For 外校生)</a></li>
+      <li>帳號=學號，密碼=舊生請仍延用上學期密碼，新生請用身分證後六碼（研究所新生若已暑修，密碼與暑修同）</li>
+      <li><a href="https://cross-college.nctu.edu.tw/" target="_blank">校際選課系統</a>(For 外校生)</li>
       <li><a href="https://summercourse.nctu.edu.tw/" target="_blank">暑修選課系統</a></li>
       <li><a href="/CRManage" target="_blank">教室借用系統</a></li>
-      <li>若有任何疑問請mail至: <a href="mailto:chcourse@cc.nctu.edu.tw">chcourse@cc.nctu.edu.tw</a></li>
-      <li><a href="http://aadm.nctu.edu.tw/chcourse/" target="_blank">課務組</a> (03)5712121 # 50421~50424</li>
+      <li>若有任何疑問：<ul>
+        <li><a href="http://aadm.nctu.edu.tw/chcourse/" target="_blank">課務組首頁</a></li>
+        <li>Email：<a href="mailto:chcourse@cc.nctu.edu.tw">chcourse@cc.nctu.edu.tw</a></li>
+        <li>電話：(03)5712121 # 50421~50424</li>
+      </ul></li>
     </ul>
   </div>
 </div>
