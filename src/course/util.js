@@ -9,7 +9,7 @@ export function getBase64Image(img) {
     const dataURL = canvas.toDataURL("image/png");
 
     return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-};
+}
 
 export function currentPage() {
   if (document.querySelector('#iframe1'))
@@ -18,12 +18,12 @@ export function currentPage() {
     return "SKIP";
   else if (document.querySelector('frameset'))
     return "MAIN";
-};
+}
 
 export function skip() {
   const $$nextPageBtn = document.querySelector('input[value="已充分瞭解"], input[value="確定"]');
   $$nextPageBtn.click();
-};
+}
 
 export default {
   getBase64Image,
