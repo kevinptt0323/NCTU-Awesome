@@ -6,7 +6,16 @@ iframe {
   border: none;
 }
 
-main.mdl-layout__content {
+.mdl-layout__header {
+  .mdl-layout-title {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.mdl-layout__content {
   display: flex;
   height: calc(~"100vh - 64px");
   > div > iframe {
