@@ -66,7 +66,7 @@ switch(currentPage()) {
     $('frameset').remove();
     document.body = document.createElement('body');
     const $content = $.parseHTML(`
- <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+ <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header class="mdl-layout__header">
     <div class="mdl-layout__header-row">
       <span class="mdl-layout-title">Title</span>
@@ -79,17 +79,27 @@ switch(currentPage()) {
       </nav>
     </div>
   </header>
-  <div class="mdl-layout__drawer">
-    <iframe src="inTitle.asp"></iframe>
-    <iframe src="inMenu.asp"></iframe>
-  </div>
   <main class="mdl-layout__content">
-    <iframe name="frmMain" src="inHelp.asp"></iframe>
+      <iframe src="inMenu.asp" name="frmMenu"></iframe>
+      <iframe name="frmMain" src="inHelp.asp"></iframe>
   </main>
+  <iframe src="inTitle.asp" name="frmTitle"></iframe>
 </div>
     `);
 
     $('body').append($content);
+
+    document.querySelector('iframe[name="frmTitle"]').onload = () => {
+        let $profile = $('iframe[name="frmTitle"]')[0].contentDocument.getElementsByTagName('td');
+
+        let job = $profile[1].innerText;
+        let name = $profile[3].innerText;
+        let department = $profile[5].innerText;
+        let semester = $profile[6].innerText;
+
+        $('iframe[name="frmTitle"]').remove();
+    };
+
     break;
 }
 

@@ -19,15 +19,13 @@
             ]
         },
         {
-            "matches": ["*://course.nctu.edu.tw/123.asp"],
+            "matches": ["*://course.nctu.edu.tw/inTitle.asp"],
             "js": [
                 "lib/jquery/jquery-3.2.1.slim.min.js",
-                "lib/mdl/material.min.js",
-                "dist/course/inMenu.js"
+                "lib/mdl/material.min.js"
             ],
             "css": [
-                "lib/mdl/material.min.css",
-                "dist/course/inMenu.css"
+                "lib/mdl/material.min.css"
             ]
         }
     ]
