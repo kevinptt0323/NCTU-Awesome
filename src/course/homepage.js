@@ -5,15 +5,58 @@ export default class homepage {
     }
     init() {
         this.modifyPage();
+
+        document.querySelector('iframe[name="frmTitle"]').onload = () => {
+            const u = this.getUserData();
+
+            $('#app header .mdl-layout-title').html(`國立交通大學選課系統 -
+            ${u.name} (${u.department} ${u.semester})`);
+
+            $('iframe[name="frmTitle"]').remove();
+        };
+
+        document.querySelector('iframe[name="frmMenu"]').onload = () => {
+            const nav = this.getNavData();
+            console.log(nav);
+        };
     }
     getUserData() {
-        const $$profile = $('iframe[name="frmTitle"]')[0].contentDocument.getElementsByTagName('td');
+        const $$profile = $('iframe[name="frmTitle"]')[0]
+            .contentDocument.getElementsByTagName('td');
 
         const job = $$profile[1].innerText;
         const name = $$profile[3].innerText;
         const department = $$profile[5].innerText;
         const semester = $$profile[6].innerText;
         return { job, name, department, semester }
+    }
+    getNavData() {
+        const $$nav = $('iframe[name="frmMenu"]')[0]
+            .contentDocument.querySelector('div[align="left"] > center')
+            .querySelectorAll('.TRHeader td, div');
+        let nav = [];
+        for(let i=0; i<$$nav.length; i++) {
+            if ($$nav[i].tagName.toLowerCase() == 'td') {
+                let item = {
+                    title: $$nav[i].textContent,
+                    href: '',
+                    items: []
+                };
+                if (i+1<$$nav.length
+                    && $$nav[i+1].tagName.toLowerCase() == 'div') {
+                    let $$items = [...$$nav[i+1].querySelectorAll('td a')];
+                    item.items = $$items.map(dom => ({
+                        title: dom.textContent,
+                        href: dom.href,
+                        onclick: dom.getAttribute('onclick')
+                    }));
+                } else {
+                    item.href = $$nav[i].querySelector('a').href;
+                }
+                nav.push(item);
+            }
+        }
+        return nav;
     }
     modifyPage() {
         $('frameset').remove();
@@ -43,14 +86,5 @@ export default class homepage {
         `);
 
         $('body').append($content);
-
-        document.querySelector('iframe[name="frmTitle"]').onload = () => {
-            const u = this.getUserData();
-
-            $('#app header .mdl-layout-title').html(`國立交通大學選課系統 -
-            ${u.name} (${u.department} ${u.semester})`);
-
-            $('iframe[name="frmTitle"]').remove();
-        };
     }
 }
