@@ -74,16 +74,17 @@ switch(currentPage()) {
       <span class="mdl-layout-title">Title</span>
       <div class="mdl-layout-spacer"></div>
       <nav class="mdl-navigation mdl-layout--large-screen-only">
-        <a class="mdl-navigation__link" href="">Link</a>
-        <a class="mdl-navigation__link" href="">Link</a>
-        <a class="mdl-navigation__link" href="">Link</a>
-        <a class="mdl-navigation__link" href="">Link</a>
+        <a class="mdl-navigation__link" href="testCourse/testCourse.asp" target="frmMain">預排功課表</a>
       </nav>
     </div>
   </header>
   <main class="mdl-layout__content">
-      <iframe src="inMenu.asp" name="frmMenu"></iframe>
-      <iframe name="frmMain" src="inHelp.asp"></iframe>
+      <div class="nav mdl-color--white mdl-shadow--4dp">
+        <iframe src="inMenu.asp" name="frmMenu"></iframe>
+      </div>
+      <div class="container">
+        <iframe name="frmMain" src="inHelp.asp"></iframe>
+      </div>
   </main>
   <iframe src="inTitle.asp" name="frmTitle"></iframe>
 </div>

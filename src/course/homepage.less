@@ -7,21 +7,22 @@ iframe {
 }
 
 main.mdl-layout__content {
-    display: flex;
-}
-
-iframe[name='frmMain'] {
-  //width: 100%;
+  display: flex;
   height: calc(~"100vh - 64px");
-
-  flex: 1;
+  > div > iframe {
+    height: 100%;
+    width: 100%;
+  }
+  .nav {
+    width: 200px;
+    z-index: 1;
+  }
+  .container {
+    flex: 1;
+    z-index: 0;
+  }
 }
 
 iframe[name='frmTitle'] {
     display: none;
-}
-
-iframe[name='frmMenu'] {
-    height: calc(~"100vh - 64px");
-    width: 200px;
 }
