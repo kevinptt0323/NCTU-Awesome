@@ -25,13 +25,23 @@ iframe {
     .nav {
         width: 200px;
         z-index: 1;
+        overflow: auto;
+        a {
+            color: rgba(0, 0, 0, .87);
+        }
+        .mdl-list__item-primary-content {
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+        }
+        .mdl-list__item-submenu {
+            padding-bottom: 0;
+        }
+        > .mdl-list > .mdl-list__item {
+        }
     }
     .container {
         flex: 1;
         z-index: 0;
     }
-}
-
-iframe[name='frmTitle'] {
-    display: none;
 }

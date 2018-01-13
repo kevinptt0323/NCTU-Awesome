@@ -4,7 +4,7 @@ export default class homepage {
     constructor() {
     }
     init() {
-        this.modifyPage();
+        this.initPage();
 
         document.querySelector('iframe[name="frmTitle"]').onload = () => {
             const u = this.getUserData();
@@ -17,7 +17,8 @@ export default class homepage {
 
         document.querySelector('iframe[name="frmMenu"]').onload = () => {
             const nav = this.getNavData();
-            console.log(nav);
+            this.initNav(nav);
+            $('iframe[name="frmMenu"]').remove();
         };
     }
     getUserData() {
@@ -39,26 +40,28 @@ export default class homepage {
             if ($$nav[i].tagName.toLowerCase() == 'td') {
                 let item = {
                     title: $$nav[i].textContent,
-                    href: '',
-                    items: []
+                    href: ''
                 };
                 if (i+1<$$nav.length
                     && $$nav[i+1].tagName.toLowerCase() == 'div') {
-                    let $$items = [...$$nav[i+1].querySelectorAll('td a')];
-                    item.items = $$items.map(dom => ({
+                    let $$items = $$nav[i+1].querySelectorAll('td a');
+                    item.items = [...$$items].map(dom => ({
                         title: dom.textContent,
-                        href: dom.href,
+                        href: dom.getAttribute('href'),
+                        target: dom.getAttribute('target'),
                         onclick: dom.getAttribute('onclick')
                     }));
                 } else {
-                    item.href = $$nav[i].querySelector('a').href;
+                    const $$a = $$nav[i].querySelector('a');
+                    item.href = $$a.getAttribute('href');
+                    item.target = $$a.getAttribute('target');
                 }
                 nav.push(item);
             }
         }
         return nav;
     }
-    modifyPage() {
+    initPage() {
         $('frameset').remove();
         document.body = document.createElement('body');
 
@@ -86,5 +89,35 @@ export default class homepage {
         `);
 
         $('body').append($content);
+    }
+    initNav(nav) {
+        const $nav = $(this.createNavHTML(nav));
+
+        $('.nav').append($nav);
+    }
+    createNavHTML(nav) {
+        return `
+<ul class="mdl-list">
+    ${nav.map(item => `
+        <li class="mdl-list__item ${ item.items ? 'mdl-list__item-submenu' : ''}">
+            ${ item.items ? `
+                <span class="mdl-list__item-primary-content">
+                    <span>${item.title}</span>
+                    ${this.createNavHTML(item.items)}
+                </span>
+            ` : `
+                <a
+                    class="mdl-list__item-primary-content"
+                    href="${item.href}"
+                    target="${item.target}"
+                    ${item.onclick ? `onclick="${item.onclick}"` : ''}
+                >
+                    ${item.title}
+                </a>
+            `}
+        </li>
+    `).join('')}
+</ul>
+        `;
     }
 }
