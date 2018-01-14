@@ -13,6 +13,7 @@ gulp.task('build:course', ['build:course:js', 'build:course:css']);
 gulp.task('build:course:js', (done) => {
   const files = [
     `${__dirname}/src/course/index.js`,
+    `${__dirname}/src/course/testCourse.js`,
   ];
   Promise.all(files.map(entry => {
     const stream = browserify({
@@ -33,7 +34,8 @@ gulp.task('build:course:js', (done) => {
 gulp.task('build:course:css', (done) => {
   const files = [
     `${__dirname}/src/course/index.less`,
-    `${__dirname}/src/course/table.less`
+    `${__dirname}/src/course/table.less`,
+    `${__dirname}/src/course/testCourse.less`,
   ];
   Promise.all(files.map(entry => {
     gulp.src(entry)
