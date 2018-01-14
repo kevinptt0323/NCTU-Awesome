@@ -59,6 +59,7 @@ class TestCourse {
         `);
 
         const $tbl = $('#divCrsList').removeAttr('style');
+        $tbl.find('table').removeAttr('width');
 
         $dialog.children('.mdl-dialog__content').append($tbl);
         $('body').append($dialog);
@@ -78,6 +79,7 @@ class TestCourse {
         `);
 
         const $tbl = $('#divTestList').removeAttr('style');
+        $tbl.find('table').removeAttr('width');
 
         $dialog.children('.mdl-dialog__content').append($tbl);
         $('body').append($dialog);
