@@ -35,52 +35,51 @@ iframe {
             flex-direction: column;
             align-items: left;
         }
-        .mdl-list__item-submenu {
-            padding-bottom: 16px;
-        }
         > .mdl-list > .mdl-list__item {
             color: white;
             a {
-                transition: all .5s linear;
+                transition: all .2s linear;
                 color: white;
             }
-
-            &:not(.mdl-list__item-submenu):hover {
+            &:hover {
                 background: rgba(255, 255, 255, 0.3);
             }
+        }
+        .mdl-list__item-submenu {
+            flex-wrap: wrap;
 
-            &.sub-close {
-                .mdl-list__item-secondary-action {
-                    transform: rotate(0deg);
+            .mdl-list {
+                width: calc(~"100% - 32px");
+                transition: max-height .5s ease-out;
+                padding: 0;
+                margin: 0;
+                max-height: 0;
+                .mdl-list__item {
+                    opacity: 0;
+                    transition: opacity .5s ease-out, background .2s;
                 }
             }
 
             .mdl-list__item-secondary-action {
-                transition: all .5s ease-in-out;
-                transform: rotate(90deg);
-                align-self: start;
+                transition: transform .2s ease-out;
+                transform: rotate(0deg);
             }
 
-            &.sub-close:hover {
-                background: rgba(255, 255, 255, 0.3);
-            }
-
-            .mdl-list__item:hover {
-                background: rgba(255, 255, 255, 0.2);
-            }
-
-            ul {
-                transition: all .5s ease-out;
-                max-height: 500px;
-            }
-
-            .sub-hidden {
-                max-height: 0;
-                padding: 0;
-                margin: 0;
-
-                > li > a{
-                    color: transparent;
+            &.sub-open {
+                &:hover {
+                    background: transparent;
+                }
+                .mdl-list {
+                    max-height: 500px;
+                }
+                .mdl-list__item-secondary-action {
+                    transform: rotate(90deg);
+                }
+                .mdl-list__item {
+                    opacity: 1;
+                }
+                .mdl-list__item:hover {
+                    background: rgba(255, 255, 255, 0.2);
                 }
             }
         }

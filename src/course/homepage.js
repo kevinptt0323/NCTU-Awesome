@@ -104,11 +104,11 @@ export default class homepage {
             ${ item.items ? `
                 <span class="mdl-list__item-primary-content">
                     <span>${item.title}</span>
-                    ${this.createNavHTML(item.items)}
                 </span>
                 <a class="mdl-list__item-secondary-action">
                     <i class="material-icons">keyboard_arrow_right</i>
                 </a>
+                ${this.createNavHTML(item.items)}
             ` : `
                 <a
                     class="mdl-list__item-primary-content"
@@ -126,17 +126,9 @@ export default class homepage {
     }
 
     addNavEvt($nav){
-        $nav.find('.mdl-list__item-submenu').addClass('sub-close');
-        $nav.find('.mdl-list__item-submenu ul').addClass('sub-hidden');
-
-        $nav.find('.mdl-list__item-submenu').click(function() {
-            let $submenu = $(this).find('ul');
-            if($submenu.hasClass('sub-hidden')) {
-                $submenu.removeClass('sub-hidden');
-                $(this).removeClass('sub-close');
-            } else {
-                $submenu.addClass('sub-hidden');
-                $(this).addClass('sub-close');
+        $nav.find('.mdl-list__item-submenu').click(function(e) {
+            if (!$(this).find('.mdl-list')[0].contains(e.target)) {
+                $(this).toggleClass('sub-open');
             }
         });
     }
