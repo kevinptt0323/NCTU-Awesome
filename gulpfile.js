@@ -33,6 +33,7 @@ gulp.task('build:course:js', (done) => {
 gulp.task('build:course:css', (done) => {
   const files = [
     `${__dirname}/src/course/index.less`,
+    `${__dirname}/src/course/table.less`
   ];
   Promise.all(files.map(entry => {
     gulp.src(entry)

@@ -27,6 +27,19 @@
             "css": [
                 "lib/mdl/material.min.css"
             ]
+        },
+        {
+            "matches": ["*://course.nctu.edu.tw/adSchedule.asp"],
+            "all_frames": true,
+            "js": [
+                "lib/jquery/jquery-3.2.1.slim.min.js",
+                "lib/mdl/material.min.js"
+            ],
+            "css": [
+                "lib/mdl/material.min.css",
+                "dist/course/table.css"
+            ]
         }
+
     ]
 }
