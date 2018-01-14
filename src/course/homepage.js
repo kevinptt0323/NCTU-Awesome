@@ -77,7 +77,7 @@ export default class homepage {
         </div>
     </header>
     <main class="mdl-layout__content">
-        <div class="nav mdl-color--white mdl-shadow--4dp">
+        <div class="nav mdl-shadow--4dp">
             <iframe src="inMenu.asp" name="frmMenu"></iframe>
         </div>
         <div class="container">
@@ -94,6 +94,7 @@ export default class homepage {
         const $nav = $(this.createNavHTML(nav));
 
         $('.nav').append($nav);
+        this.addNavEvt($nav);
     }
     createNavHTML(nav) {
         return `
@@ -105,6 +106,9 @@ export default class homepage {
                     <span>${item.title}</span>
                     ${this.createNavHTML(item.items)}
                 </span>
+                <a class="mdl-list__item-secondary-action">
+                    <i class="material-icons">keyboard_arrow_right</i>
+                </a>
             ` : `
                 <a
                     class="mdl-list__item-primary-content"
@@ -119,5 +123,21 @@ export default class homepage {
     `).join('')}
 </ul>
         `;
+    }
+
+    addNavEvt($nav){
+        $nav.find('.mdl-list__item-submenu').addClass('sub-close');
+        $nav.find('.mdl-list__item-submenu ul').addClass('sub-hidden');
+
+        $nav.find('.mdl-list__item-submenu').click(function() {
+            let $submenu = $(this).find('ul');
+            if($submenu.hasClass('sub-hidden')) {
+                $submenu.removeClass('sub-hidden');
+                $(this).removeClass('sub-close');
+            } else {
+                $submenu.addClass('sub-hidden');
+                $(this).addClass('sub-close');
+            }
+        });
     }
 }
