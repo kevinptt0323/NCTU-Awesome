@@ -1,5 +1,11 @@
-body.no-scroll {
-    overflow: hidden;
+body{
+    &.no-scroll {
+        overflow: hidden;
+    }
+
+    .statusbar {
+        display: none;
+    }
 }
 h1 {
     font-size: 2em;
@@ -24,10 +30,6 @@ h1 {
     table {
         width: 100%;
     }
-}
-
-.statusbar {
-    display: none !important;
 }
 
 table#tblSchedule {
