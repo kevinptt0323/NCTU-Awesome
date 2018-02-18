@@ -5,12 +5,16 @@
         "webextensions": true
     },
     "extends": [
-        "eslint:recommended"
+        "airbnb-base"
     ],
     "parserOptions": {
         "sourceType": "module"
     },
     "rules": {
-        "indent": ["error", 4]
+        "indent": ["error", 4],
+        "import/no-extraneous-dependencies": "off",
+        "import/extensions": "off",
+        "import/no-unresolved": "off",
+        "no-plusplus": "off"
     }
 }
