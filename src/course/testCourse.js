@@ -1,35 +1,32 @@
 import $ from 'jquery';
 
-(function(global) {
+(function injectHTMLDialogElementPrototype(global) {
     const { HTMLDialogElement, CustomEvent } = global;
-    const show = HTMLDialogElement.prototype.show;
-    HTMLDialogElement.prototype.show = function() {
-        show.apply(this, arguments);
+    const { show, showModal } = HTMLDialogElement.prototype;
+    HTMLDialogElement.prototype.show = function _show(...args) {
+        show.apply(this, args);
         const openEvent = new CustomEvent('open', {
             bubbles: false,
-            cancelable: false
+            cancelable: false,
         });
         this.dispatchEvent(openEvent);
     };
 
-    const showModal = HTMLDialogElement.prototype.showModal;
-    HTMLDialogElement.prototype.showModal = function() {
-        showModal.apply(this, arguments);
+    HTMLDialogElement.prototype.showModal = function _showModal(...args) {
+        showModal.apply(this, args);
         const openEvent = new CustomEvent('open', {
             bubbles: false,
-            cancelable: false
+            cancelable: false,
         });
         this.dispatchEvent(openEvent);
     };
-})(window);
+}(window));
 
 class TestCourse {
-    constructor() {
-    }
-    init() {
-        const query = this.initQueryCourse();
-        this.initSelectedCourse();
-        this.initButtons(query);
+    static init() {
+        const query = TestCourse.initQueryCourse();
+        TestCourse.initSelectedCourse();
+        TestCourse.initButtons(query);
 
         $('.mdl-dialog')
             .on('open', () => {
@@ -38,16 +35,18 @@ class TestCourse {
             .on('close', () => {
                 $('body').removeClass('no-scroll');
             })
-            .on('click', '.close', e => {
+            .on('click', '.close', (e) => {
                 e.delegateTarget.close();
             });
-        if (query)
+        if (query) {
             $('#dialog__query-course')[0].showModal();
+        }
     }
-    initQueryCourse() {
-        if (!document.getElementById('divCrsList'))
+    static initQueryCourse() {
+        if (!document.getElementById('divCrsList')) {
             return false;
-        let $dialog = $(`
+        }
+        const $dialog = $(`
 <dialog class="mdl-dialog" id="dialog__query-course">
     <h4 class="mdl-dialog__title">課程查詢</h4>
     <div class="mdl-dialog__content">
@@ -66,8 +65,8 @@ class TestCourse {
         $('#btnDivCrsList').remove();
         return true;
     }
-    initSelectedCourse() {
-        let $dialog = $(`
+    static initSelectedCourse() {
+        const $dialog = $(`
 <dialog class="mdl-dialog" id="dialog__selected-course">
     <h4 class="mdl-dialog__title">已選課程</h4>
     <div class="mdl-dialog__content">
@@ -86,7 +85,7 @@ class TestCourse {
         $('#btnDivTestList').remove();
         return true;
     }
-    initButtons(query) {
+    static initButtons(query) {
         const $buttons = $(`
 <div id="buttons">
     <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"
@@ -100,7 +99,7 @@ class TestCourse {
     </button>
 </div>
         `);
-        $buttons.find('button[data-target]').on('click', function() {
+        $buttons.find('button[data-target]').on('click', function onclick() {
             const target = $(this).data('target');
             $(target)[0].showModal();
         });
@@ -108,6 +107,4 @@ class TestCourse {
     }
 }
 
-const testCourse = new TestCourse();
-
-testCourse.init();
+TestCourse.init();

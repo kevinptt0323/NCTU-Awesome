@@ -1,20 +1,21 @@
-import componentHandler from 'componentHandler'
+import componentHandler from 'componentHandler';
 import { currentPage, skip } from './util';
 import Login from './login';
 import Homepage from './homepage';
 
 const login = new Login();
-const homepage = new Homepage();
 
-switch(currentPage()) {
-case "LOGIN":
+switch (currentPage()) {
+case 'LOGIN':
     login.init();
     break;
-case "SKIP":
+case 'SKIP':
     skip();
     break;
-case "MAIN":
-    homepage.init();
+case 'MAIN':
+    Homepage.init();
+    break;
+default:
     break;
 }
 

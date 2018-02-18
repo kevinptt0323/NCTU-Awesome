@@ -1,13 +1,11 @@
 import $ from 'jquery';
 
-export default class homepage {
-    constructor() {
-    }
-    init() {
-        this.initPage();
+export default class Homepage {
+    static init() {
+        Homepage.initPage();
 
         document.querySelector('iframe[name="frmTitle"]').onload = () => {
-            const u = this.getUserData();
+            const u = Homepage.getUserData();
 
             $('#app header .mdl-layout-title').html(`國立交通大學選課系統 -
             ${u.name} (${u.department} ${u.semester})`);
@@ -16,12 +14,12 @@ export default class homepage {
         };
 
         document.querySelector('iframe[name="frmMenu"]').onload = () => {
-            const nav = this.getNavData();
-            this.initNav(nav);
+            const nav = Homepage.getNavData();
+            Homepage.initNav(nav);
             $('iframe[name="frmMenu"]').remove();
         };
     }
-    getUserData() {
+    static getUserData() {
         const $$profile = $('iframe[name="frmTitle"]')[0]
             .contentDocument.getElementsByTagName('td');
 
@@ -29,27 +27,29 @@ export default class homepage {
         const name = $$profile[3].innerText;
         const department = $$profile[5].innerText;
         const semester = $$profile[6].innerText;
-        return { job, name, department, semester }
+        return {
+            job, name, department, semester,
+        };
     }
-    getNavData() {
+    static getNavData() {
         const $$nav = $('iframe[name="frmMenu"]')[0]
             .contentDocument.querySelector('div[align="left"] > center')
             .querySelectorAll('.TRHeader td, div');
-        let nav = [];
-        for(let i=0; i<$$nav.length; i++) {
-            if ($$nav[i].tagName.toLowerCase() == 'td') {
-                let item = {
+        const nav = [];
+        for (let i = 0; i < $$nav.length; i++) {
+            if ($$nav[i].tagName.toLowerCase() === 'td') {
+                const item = {
                     title: $$nav[i].textContent,
-                    href: ''
+                    href: '',
                 };
-                if (i+1<$$nav.length
-                    && $$nav[i+1].tagName.toLowerCase() == 'div') {
-                    let $$items = $$nav[i+1].querySelectorAll('td a');
+                if (i + 1 < $$nav.length
+                    && $$nav[i + 1].tagName.toLowerCase() === 'div') {
+                    const $$items = $$nav[i + 1].querySelectorAll('td a');
                     item.items = [...$$items].map(dom => ({
                         title: dom.textContent,
                         href: dom.getAttribute('href'),
                         target: dom.getAttribute('target'),
-                        onclick: dom.getAttribute('onclick')
+                        onclick: dom.getAttribute('onclick'),
                     }));
                 } else {
                     const $$a = $$nav[i].querySelector('a');
@@ -61,7 +61,7 @@ export default class homepage {
         }
         return nav;
     }
-    initPage() {
+    static initPage() {
         $('frameset').remove();
         document.body = document.createElement('body');
 
@@ -90,25 +90,25 @@ export default class homepage {
 
         $('body').append($content);
     }
-    initNav(nav) {
-        const $nav = $(this.createNavHTML(nav));
+    static initNav(nav) {
+        const $nav = $(Homepage.createNavHTML(nav));
 
         $('.nav').append($nav);
-        this.addNavEvt($nav);
+        Homepage.addNavEvt($nav);
     }
-    createNavHTML(nav) {
+    static createNavHTML(nav) {
         return `
 <ul class="mdl-list">
     ${nav.map(item => `
-        <li class="mdl-list__item ${ item.items ? 'mdl-list__item-submenu' : ''}">
-            ${ item.items ? `
+        <li class="mdl-list__item ${item.items ? 'mdl-list__item-submenu' : ''}">
+            ${item.items ? `
                 <span class="mdl-list__item-primary-content">
                     <span>${item.title}</span>
                 </span>
                 <a class="mdl-list__item-secondary-action">
                     <i class="material-icons">keyboard_arrow_right</i>
                 </a>
-                ${this.createNavHTML(item.items)}
+                ${Homepage.createNavHTML(item.items)}
             ` : `
                 <a
                     class="mdl-list__item-primary-content"
@@ -125,8 +125,8 @@ export default class homepage {
         `;
     }
 
-    addNavEvt($nav){
-        $nav.find('.mdl-list__item-submenu').click(function(e) {
+    static addNavEvt($nav) {
+        $nav.find('.mdl-list__item-submenu').click(function onclick(e) {
             if (!$(this).find('.mdl-list')[0].contains(e.target)) {
                 $(this).toggleClass('sub-open');
             }

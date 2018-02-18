@@ -1,8 +1,6 @@
 import $ from 'jquery';
 
 export default class Login {
-    constructor() {
-    }
     generateDOM() {
         this.$loginForm = $.parseHTML(`
 <div id="login_form" class="mdl-color--white mdl-shadow--2dp mdl-grid">
@@ -57,8 +55,9 @@ export default class Login {
         `);
     }
     init() {
-        if (!this.$loginForm || !this.$announcement)
+        if (!this.$loginForm || !this.$announcement) {
             this.generateDOM();
+        }
         $('form > div').remove();
         $('form').prepend(this.$loginForm, this.$announcement);
     }
