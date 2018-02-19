@@ -19,6 +19,41 @@ export default class Homepage {
             $('iframe[name="frmMenu"]').remove();
         };
     }
+    static initPage() {
+        $('frameset').remove();
+        document.body = document.createElement('body');
+
+        const $content = $(`
+<div id="app" class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+            <a class="mdl-layout-title mdl-color-text--white" href="inHelp.asp">Title</a>
+            <div class="mdl-layout-spacer"></div>
+            <nav class="mdl-navigation mdl-layout--large-screen-only">
+                <a class="mdl-navigation__link" href="testCourse/testCourse.asp" target="frmMain">預排功課表</a>
+            </nav>
+        </div>
+    </header>
+    <main class="mdl-layout__content">
+        <div class="nav mdl-shadow--4dp">
+            <iframe src="inMenu.asp" name="frmMenu"></iframe>
+        </div>
+        <div class="container">
+            <iframe name="frmMain" src="inHelp.asp"></iframe>
+        </div>
+    </main>
+    <iframe src="inTitle.asp" name="frmTitle"></iframe>
+    <form method="POST" target="frmMain" id="frmAction">
+        <input type="hidden" name="qAction">
+        <input type="hidden" name="qKey">
+        <input type="hidden" name="qAcy">
+        <input type="hidden" name="qSemester">
+    </form>
+</div>
+        `);
+
+        $('body').append($content);
+    }
     static getUserData() {
         const $$profile = $('iframe[name="frmTitle"]')[0]
             .contentDocument.getElementsByTagName('td');
@@ -61,68 +96,43 @@ export default class Homepage {
         }
         return nav;
     }
-    static initPage() {
-        $('frameset').remove();
-        document.body = document.createElement('body');
-
-        const $content = $.parseHTML(`
-<div id="app" class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <header class="mdl-layout__header">
-        <div class="mdl-layout__header-row">
-            <a class="mdl-layout-title mdl-color-text--white" href="inHelp.asp">Title</a>
-            <div class="mdl-layout-spacer"></div>
-            <nav class="mdl-navigation mdl-layout--large-screen-only">
-                <a class="mdl-navigation__link" href="testCourse/testCourse.asp" target="frmMain">預排功課表</a>
-            </nav>
-        </div>
-    </header>
-    <main class="mdl-layout__content">
-        <div class="nav mdl-shadow--4dp">
-            <iframe src="inMenu.asp" name="frmMenu"></iframe>
-        </div>
-        <div class="container">
-            <iframe name="frmMain" src="inHelp.asp"></iframe>
-        </div>
-    </main>
-    <iframe src="inTitle.asp" name="frmTitle"></iframe>
-</div>
-        `);
-
-        $('body').append($content);
-    }
     static initNav(nav) {
         const $nav = $(Homepage.createNavHTML(nav));
 
         $('.nav').append($nav);
         Homepage.addNavEvt($nav);
     }
-    static createNavHTML(nav) {
+    static createNavHTML(nav, parId = '0') {
+        const navHTML = nav.map(({
+            items, title, href, target,
+        }, index) => {
+            const ret = `
+<li class="mdl-list__item ${items ? 'mdl-list__item-submenu' : ''}">
+    ${items ? `
+        <span class="mdl-list__item-primary-content">
+            <span>${title}</span>
+        </span>
+        <a class="mdl-list__item-secondary-action">
+            <i class="material-icons">keyboard_arrow_right</i>
+        </a>
+        ${Homepage.createNavHTML(items, `${parId}-${index}`)}
+    ` : `
+        <a
+            id="nav-${parId}-${index}"
+            class="mdl-list__item-primary-content"
+            href="${href}"
+            target="${target}"
+        >
+            ${title}
+        </a>
+    `}
+</li>
+`;
+            return ret;
+        });
         return `
-<ul class="mdl-list">
-    ${nav.map(item => `
-        <li class="mdl-list__item ${item.items ? 'mdl-list__item-submenu' : ''}">
-            ${item.items ? `
-                <span class="mdl-list__item-primary-content">
-                    <span>${item.title}</span>
-                </span>
-                <a class="mdl-list__item-secondary-action">
-                    <i class="material-icons">keyboard_arrow_right</i>
-                </a>
-                ${Homepage.createNavHTML(item.items)}
-            ` : `
-                <a
-                    class="mdl-list__item-primary-content"
-                    href="${item.href}"
-                    target="${item.target}"
-                    ${item.onclick ? `onclick="${item.onclick}"` : ''}
-                >
-                    ${item.title}
-                </a>
-            `}
-        </li>
-    `).join('')}
-</ul>
-        `;
+<ul class="mdl-list"> ${navHTML.join('')} </ul>
+`;
     }
 
     static addNavEvt($nav) {
@@ -131,5 +141,28 @@ export default class Homepage {
                 $(this).toggleClass('sub-open');
             }
         });
+        $nav.find('#nav-0-2-0').click((e) => {
+            e.preventDefault();
+            return Homepage.SetfrmAction('adNow.asp', '選課狀況', '0656014');
+        });
+    }
+
+    static SetfrmAction(url, qAction, qKey, qAcy, qSeme) {
+        const frmAction = document.getElementById('frmAction');
+        frmAction.action = url;
+        frmAction.qAction.value = qAction;
+        if (qKey === '?') {
+            const qCrsno = prompt('加入欲審核課號', '');
+            if (qCrsno == null || qCrsno === '' || qCrsno.length !== 4) {
+                return false;
+            }
+            document.frmAction.qKey.value = qCrsno;
+        } else {
+            frmAction.qKey.value = qKey;
+        }
+        frmAction.qAcy.value = qAcy;
+        frmAction.qSemester.value = qSeme;
+        frmAction.submit();
+        return false;
     }
 }
