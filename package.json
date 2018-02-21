@@ -14,10 +14,14 @@
     "exposify": "^0.5.0",
     "gulp": "^3.9.1",
     "gulp-less": "^3.4.0",
-    "vinyl-source-stream": "^2.0.0"
+    "gulp-util": "^3.0.8",
+    "gulp-watch-less2": "^2.0.4",
+    "vinyl-source-stream": "^2.0.0",
+    "watchify": "^3.10.0"
   },
   "scripts": {
     "build": "gulp build",
+    "watch": "gulp watch",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src"
   },
