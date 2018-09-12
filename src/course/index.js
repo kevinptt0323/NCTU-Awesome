@@ -7,16 +7,16 @@ const login = new Login();
 
 switch (currentPage()) {
 case 'LOGIN':
-    login.init();
-    break;
+  login.init();
+  break;
 case 'SKIP':
-    skip();
-    break;
+  skip();
+  break;
 case 'MAIN':
-    Homepage.init();
-    break;
+  Homepage.init();
+  break;
 default:
-    break;
+  break;
 }
 
 componentHandler.upgradeAllRegistered();
