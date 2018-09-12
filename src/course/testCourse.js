@@ -104,6 +104,10 @@ class TestCourse {
             $(target)[0].showModal();
         });
         $('body').prepend($buttons);
+        // 隱藏預排功課表
+        $('#btnDivSchedule ~ input[type="button"]')
+            .addClass('mdl-button mdl-js-button mdl-js-ripple-effect');
+        $('#btnDivSchedule').remove();
     }
 }
 
