@@ -4,7 +4,6 @@
     "name": "NCTU-Awesome",
     "version": "1.0",
     "homepage_url": "https://github.com/kevinptt0323/NCTU-Awesome",
-
     "content_scripts": [
         {
             "matches": ["*://course.nctu.edu.tw/", "*://course.nctu.edu.tw/index.asp"],
@@ -15,6 +14,7 @@
             ],
             "css": [
                 "lib/mdl/material.min.css",
+                "lib/mdl/icon.css",
                 "dist/course/index.css"
             ]
         },
@@ -26,6 +26,7 @@
             ],
             "css": [
                 "lib/mdl/material.min.css",
+                "lib/mdl/icon.css",
                 "dist/course/table.css"
             ]
         },
@@ -41,10 +42,13 @@
             ],
             "css": [
                 "lib/mdl/material.min.css",
+                "lib/mdl/icon.css",
                 "dist/course/table.css",
                 "dist/course/testCourse.css"
             ]
         }
-
+    ],
+    "web_accessible_resources": [
+        "*.woff2"
     ]
 }
