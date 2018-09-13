@@ -80,7 +80,41 @@ function addCourseTask() {
   });
 }
 
+function addE3NewTask() {
+  const taskName = 'e3new';
+  const rebundle = (b, entry) => (
+    b.transform('exposify', { expose })
+      .bundle()
+      .pipe(source(entry.split('/').reverse()[0]))
+      .pipe(gulp.dest(`${__dirname}/dist/${taskName}`))
+  );
+  const files = {
+    style: [
+      `${__dirname}/src/e3new/index.less`,
+    ],
+  };
+
+  gulp.task(`build:${taskName}`, (done) => {
+    Promise.all(files.style.map(entry => {
+      gulp.src(entry)
+        .pipe(less())
+        .pipe(gulp.dest(`${__dirname}/dist/${taskName}`));
+    }))
+      .then(() => done());
+  });
+  gulp.task(`watch:${taskName}`, () => {
+    files.style.map(entry => {
+      gulp.src(entry)
+        .pipe(watchLess(entry, { verbose: true }))
+        .pipe(less())
+        .pipe(gulp.dest(`${__dirname}/dist/${taskName}`));
+    });
+  });
+}
+
 addCourseTask();
 
-gulp.task('build', ['build:course']);
-gulp.task('watch', ['watch:course']);
+addE3NewTask();
+
+gulp.task('build', ['build:course', 'build:e3new']);
+gulp.task('watch', ['watch:course', 'build:e3new']);

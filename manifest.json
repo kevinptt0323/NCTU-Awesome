@@ -46,6 +46,14 @@
         "dist/course/table.css",
         "dist/course/testCourse.css"
       ]
+    },
+    {
+      "matches": [
+        "*://e3new.nctu.edu.tw/*"
+      ],
+      "css": [
+        "dist/e3new/index.css"
+      ]
     }
   ],
   "web_accessible_resources": [
