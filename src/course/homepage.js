@@ -107,7 +107,10 @@ export default class Homepage {
       items, title, href, target,
     }, index) => {
       const ret = `
-<li class="mdl-list__item ${items ? 'mdl-list__item-submenu' : ''}">
+<li
+  class="mdl-list__item${items ? ' mdl-list__item-submenu' : ''}"
+  ${items ? `style="--item-num: ${items.length}"` : ""}
+  >
   ${items ? `
     <span class="mdl-list__item-primary-content">
       <span>${title}</span>
