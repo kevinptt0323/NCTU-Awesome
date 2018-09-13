@@ -12,23 +12,27 @@ const expose = {
   'componentHandler': 'componentHandler',
 };
 
+const srcRoot = `${__dirname}/src`;
+const extensionRoot = `${__dirname}/extension`;
+const distRoot = `${extensionRoot}/dist`;
+
 function addCourseTask() {
   const taskName = 'course';
   const rebundle = (b, entry) => (
     b.transform('exposify', { expose })
       .bundle()
       .pipe(source(entry.split('/').reverse()[0]))
-      .pipe(gulp.dest(`${__dirname}/dist/course`))
+      .pipe(gulp.dest(`${distRoot}/course`))
   );
   const files = {
     script: [
-      `${__dirname}/src/course/index.js`,
-      `${__dirname}/src/course/testCourse.js`,
+      `${srcRoot}/course/index.js`,
+      `${srcRoot}/course/testCourse.js`,
     ],
     style: [
-      `${__dirname}/src/course/index.less`,
-      `${__dirname}/src/course/table.less`,
-      `${__dirname}/src/course/testCourse.less`,
+      `${srcRoot}/course/index.less`,
+      `${srcRoot}/course/table.less`,
+      `${srcRoot}/course/testCourse.less`,
     ],
   };
 
@@ -52,7 +56,7 @@ function addCourseTask() {
     Promise.all(files.style.map(entry => {
       gulp.src(entry)
         .pipe(less())
-        .pipe(gulp.dest(`${__dirname}/dist/course`));
+        .pipe(gulp.dest(`${distRoot}/${taskName}`));
     }))
       .then(() => done());
   });
@@ -75,7 +79,7 @@ function addCourseTask() {
       gulp.src(entry)
         .pipe(watchLess(entry, { verbose: true }))
         .pipe(less())
-        .pipe(gulp.dest(`${__dirname}/dist/course`));
+        .pipe(gulp.dest(`${distRoot}/${taskName}`));
     });
   });
 }
@@ -86,11 +90,11 @@ function addE3NewTask() {
     b.transform('exposify', { expose })
       .bundle()
       .pipe(source(entry.split('/').reverse()[0]))
-      .pipe(gulp.dest(`${__dirname}/dist/${taskName}`))
+      .pipe(gulp.dest(`${distRoot}/${taskName}`))
   );
   const files = {
     style: [
-      `${__dirname}/src/e3new/index.less`,
+      `${srcRoot}/e3new/index.less`,
     ],
   };
 
@@ -98,7 +102,7 @@ function addE3NewTask() {
     Promise.all(files.style.map(entry => {
       gulp.src(entry)
         .pipe(less())
-        .pipe(gulp.dest(`${__dirname}/dist/${taskName}`));
+        .pipe(gulp.dest(`${distRoot}/${taskName}`));
     }))
       .then(() => done());
   });
@@ -107,7 +111,7 @@ function addE3NewTask() {
       gulp.src(entry)
         .pipe(watchLess(entry, { verbose: true }))
         .pipe(less())
-        .pipe(gulp.dest(`${__dirname}/dist/${taskName}`));
+        .pipe(gulp.dest(`${distRoot}/${taskName}`));
     });
   });
 }
