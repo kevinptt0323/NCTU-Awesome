@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "NCTU Awesome",
   "description": "讓交大的網頁變得更好用。",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage_url": "https://github.com/kevinptt0323/NCTU-Awesome",
   "content_scripts": [
     {
