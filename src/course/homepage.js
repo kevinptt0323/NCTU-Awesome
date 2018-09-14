@@ -7,8 +7,8 @@ export default class Homepage {
     document.querySelector('iframe[name="frmTitle"]').onload = () => {
       const u = Homepage.getUserData();
 
-      $('#app header .mdl-layout-title').html(`國立交通大學選課系統 -
-      ${u.name} (${u.department} ${u.semester})`);
+      $('#app header .mdl-layout-title')
+        .html(`國立交通大學選課系統 - ${u.name} (${u.department} ${u.semester})`);
 
       $('iframe[name="frmTitle"]').remove();
     };
@@ -108,8 +108,8 @@ export default class Homepage {
     }, index) => {
       const ret = `
 <li
-  class="mdl-list__item${items ? ' mdl-list__item-submenu' : ''}"
-  ${items ? `style="--item-num: ${items.length}"` : ""}
+  class='mdl-list__item${items ? ' mdl-list__item-submenu' : ''}'
+  ${items ? `style='--item-num: ${items.length}'` : ''}
   >
   ${items ? `
     <span class="mdl-list__item-primary-content">
@@ -144,9 +144,25 @@ export default class Homepage {
         $(this).toggleClass('sub-open');
       }
     });
+    $nav.find('#nav-0-0-0').click((e) => {
+      e.preventDefault();
+      return Homepage.SetfrmAction('adMain.asp', '加選');
+    });
+    $nav.find('#nav-0-0-1').click((e) => {
+      e.preventDefault();
+      return Homepage.SetfrmAction('adNow.asp', '退選');
+    });
     $nav.find('#nav-0-2-0').click((e) => {
       e.preventDefault();
-      return Homepage.SetfrmAction('adNow.asp', '選課狀況', '0656014');
+      return Homepage.SetfrmAction('adNow.asp', '選課狀況');
+    });
+    $nav.find('#nav-0-7-0').click((e) => {
+      e.preventDefault();
+      return Homepage.SetfrmAction('upwd.asp', '更改密碼');
+    });
+    $nav.find('#nav-0-7-1').click((e) => {
+      e.preventDefault();
+      return Homepage.SetfrmAction('pemail.asp', '更改信箱');
     });
   }
 
